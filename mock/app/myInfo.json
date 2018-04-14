@@ -1,0 +1,32 @@
+{
+  "code": 0,
+  "message": "",
+  "data": {
+    "user": {
+      "uid": 10145096,
+      "id": 10145096,
+      "passport": "duolong1",
+      "email": "XXX@yanxiu.com",
+      "mobile": "135****7876",
+      "realName": "duolong1",
+      "nickName": "duolong1170",
+      "avatar": "http://s1.jsyxw.cn/yanxiu/u/68/74/Img917468_80.jpg",
+      "regDate": "2017-07-10 12:25:04",
+      "cityId": null,
+      "cityName": null,
+      "schoolId": 999999,
+      "schoolName": "",
+      "showName": "duolong1",
+      "stuStageId": -1,
+      "grade": 11,
+      "courseId": -1,
+      "gendFlag": 0,
+      "birthday": "1995-01-01",
+      "personalId": null,
+      "password": "fcea920f7412b5da7be0cf42b8c93759"
+    }
+  },
+  "currentUser": "",
+  "currentTime": 1520578171945,
+  "error": null
+}

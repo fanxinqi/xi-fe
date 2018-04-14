@@ -1,0 +1,24 @@
+{
+    "code": 0,
+    "message": "获取信息成功",
+    "data": {
+        "userInfo": {
+            "id": 1,
+            "userid": 23248710,
+            "appKey": "f749edf6-bc39-6ef9-8f81-158se5fds842",
+            "realName": "白晓方",
+            "nickName": "白",
+            "sex": 0,
+            "birthday": "1987-09-02 13:56:39",
+            "createTime": "2018-03-13 13:57:02",
+            "updateTime": "2018-03-13 13:57:06",
+            "state": 1,
+            "mobile": "18610583576",
+            "email": "bxf0802@sina.com",
+            "headImg": "http://s1.jsyxw.cn/yanxiu/u/68/74/Img917468_80.jpg"
+        }
+    },
+    "currentUser": "",
+    "currentTime": 1520928857701,
+    "error": null
+}

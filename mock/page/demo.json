@@ -1,0 +1,13 @@
+{  
+    "code":0,
+    "message":"",
+    "data":"测试demo1",
+    "error":null,
+    "currentUser":
+    {
+        "userInfo":
+        {
+            "userId":-1
+        }
+    }
+}
