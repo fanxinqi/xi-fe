@@ -37,7 +37,7 @@ const portals = {
         }
     },
     "collect": {
-        uri: "/api/clothes_category/list",
+        uri: "/api/clothesCategory/list",
         queries: null,
         method: 'get',
         data: null
@@ -52,7 +52,7 @@ const portals = {
         data: null
     },
     "member": {
-        uri: "/api/member/list_category",
+        uri: "/api/member/listCategory",
         queries: null,
         method: 'get',
         data: null

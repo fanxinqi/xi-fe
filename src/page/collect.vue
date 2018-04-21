@@ -217,10 +217,9 @@ export default {
 }
 
 .bottom {
-  display: none;
   position: fixed;
   background: #f8f8fe;
-  bottom: 50px;
+  bottom: 30px;
   width: 100%;
   .total {
     line-height: 30px;
