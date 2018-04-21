@@ -1,27 +1,16 @@
 <template>
-  <section class="HolyGrail">
-    <section  class="HolyGrail-body"> 
-        <main class="HolyGrail-content">
-            <section class="header">
-                 <header-view></header-view>  
-            </section>
-            <section class="crumbs">
-                 <breadcrumb-view></breadcrumb-view>  
-            </section>
-            <section class="content">
-                <transition name="fade" mode="out-in">
-                    <Card :bordered="false">
-                        <router-view></router-view>
-                    </Card>
-                </transition> 
-            </section>
-        </main>
-        <nav class="HolyGrail-nav">
-            <menu-view v-show="menuShow" ></menu-view>
-        </nav>
-        <!-- <aside class="HolyGrail-ads">...</aside> -->
+ <section class="page">
+    <layout-view v-if="isLogin">
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition> 
+    </layout-view>
+    <section v-if="!isLogin"  class="page">
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition> 
     </section>
-  </section>
+ </section>
 
 </template>
 
@@ -29,20 +18,14 @@
 <script>
 import config from '../config';
 import Vue from 'vue';
-import headerView from '../fragment/header/header.vue';
-import footerView from '../fragment/footer.vue';
-import menuView from '../fragment/menu.vue';
-import breadcrumbView from '../fragment/breadcrumb.vue';
+import layoutView from './layout/home.vue';
 export default {
     components: {
-        headerView,
-        footerView,
-        menuView,
-        breadcrumbView 
+        layoutView
     },
     computed:{
-        menuShow(){
-            return this.$route.name!='login'
+        isLogin(){
+            return this.$store.state.error!=100
         }
     },
     data() {
@@ -54,7 +37,9 @@ export default {
 </script>
 
 <style>
-
+    .page{
+        height:100%;
+    }
 </style>
 
 

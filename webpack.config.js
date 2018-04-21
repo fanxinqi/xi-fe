@@ -35,10 +35,12 @@ const mockProxy={
     }
 }
 
+// const serverProxy={
+//     "/api": "http://127.0.0.1:9992"
+// }
 const serverProxy={
-    "/api": "http://192.168.1.104:8090"
+    "/api": "http://192.168.1.170:8092"
 }
-
 console.log(process.env.NODE_ENV);
 
 const webpackConfig={
@@ -60,7 +62,8 @@ const webpackConfig={
                           'syntax-dynamic-import',
                           'transform-async-to-generator',
                           'transform-regenerator',
-                          'transform-runtime'
+                          'transform-runtime',
+                          'transform-vue-jsx'
                         ]
                     }  }
                   ]

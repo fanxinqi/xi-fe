@@ -20,8 +20,6 @@ import 'iview/dist/styles/iview.css';    // 使用 CSS
 import './lib/lib.scss'
 import './lib/theme.scss'
 import 'video.js/dist/video-js.css'
-// import 'vue-video-player/src/custom-theme.css'
-// import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 import './lib/exculde/exculde.scss'
 
 const view = createContainer('app')(AppView);
@@ -31,8 +29,7 @@ import LockBox from './component/lock-box.vue';
 import SmartTable from './component/smart-table.vue';
 
 const init = function({mountPointID, routerMode}, data){
-
-
+    
     Vue.use(VueRouter);
     Vue.use(Iview);
     

@@ -6,7 +6,7 @@
         <div class="menus">
             <Menu :theme="theme3" @on-select="select"  active-key="1" v-for="(group,gidx) in menuGroups" :key="gidx">
                 <!-- <Menu-group v-for="(group,gidx) in menuGroups" :key="gidx" :title="group.groupName" > -->
-                    <Menu-item :key="menu.name" :name="menu.name" v-for="(menu,idx) in group.menus"  >
+                    <Menu-item v-for="(menu,idx) in group.menus" :name="menu.name"  :key="menu.name"  >
                         <Icon :type="menu.icon"></Icon><span class="title">{{menu.title}}</span>
                     </Menu-item>
                 <!-- </Menu-group> -->

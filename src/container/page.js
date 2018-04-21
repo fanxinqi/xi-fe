@@ -51,7 +51,8 @@ const pageContainer = function (view, options) {
             let errorCode = this.$store.state.error;
 
             const errorCodeType = this.$store.state['error-type'];
-            if(errorCode===300||errorCode===200){
+            
+            if(errorCode===100){
                 return h(login)
             }
 
@@ -91,11 +92,11 @@ const pageContainer = function (view, options) {
             const cache=dao.cache(md5(portalName+JSON.stringify(queries)));
             const curRoute=this.$router.options.routes.filter(function(route){return route.name===portalName})[0];
             //如果页面距离上次1分钟以内，且有正确数据、路由noCache为fasle或未定义 走缓存数据
-            if(cache&&Object.getOwnPropertyNames(cache.value["c-page-data"]).length>1&&(new Date().getTime()-cache.time)<60000&&!curRoute.noCache&&!queries.noCache&&cache.value["error"]===0){
-                this.$store.dispatch('loaded');
-                this.$store.dispatch('refeshData', cache.value);
-            }
-            else{
+            // if(cache&&Object.getOwnPropertyNames(cache.value["c-page-data"]).length>1&&(new Date().getTime()-cache.time)<60000&&!curRoute.noCache&&!queries.noCache&&cache.value["error"]===0){
+            //     this.$store.dispatch('loaded');
+            //     this.$store.dispatch('refeshData', cache.value);
+            // }
+            // else{
                 this.$store.dispatch('loading');
                 let token=this.$store.state["token"],
                 formData={
@@ -111,7 +112,7 @@ const pageContainer = function (view, options) {
                     const initStateData = dao.init(res.data, {name: md5(portalName+JSON.stringify(queries))});
                     this.$store.dispatch('refeshData', initStateData);
                 })
-            }
+            // }
            
         },
         created() {
@@ -139,6 +140,25 @@ const pageContainer = function (view, options) {
         },
         destroyed() {
             // console.log('destroyed', this.viewName);
+        },
+        watch:{
+            message(event) {
+                const val = event && event.msg;
+                if(val) {
+                    this.$Message.info({
+                        duration: 3,
+                        content: val
+                    });
+                }
+            }
+        },
+        computed: {
+            location() {
+                return this.$store.state.location;
+            },
+            message() {
+                return this.$store.state.message;
+            }
         }
     };
 };

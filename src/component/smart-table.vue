@@ -577,6 +577,14 @@ const SmartTable = {
         pageSize: {
             type: Number,
             default: 10
+        },
+        searchBox:{
+            type: Boolean,
+            default: false,
+        },
+        searchBoxPlaceholder:{
+            type: String,
+            default: ''
         }
     },
 

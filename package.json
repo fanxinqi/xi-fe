@@ -6,20 +6,23 @@
   "author": "fanxinqi",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack --mode development  --watch   --env.NODE_ENV=local",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development  --open ",
-    "help": "webpack-dev-server --mode development  --help ",
+    "dev": "webpack --mode development  --watch --progress",
+    "build": "webpack --mode production --progress",
+    "start": "webpack-dev-server --mode development  --open --progress",
+    "help": "webpack-dev-server --mode development  --help --progress",
     "mock": "node ./mock/server/index.js",
     "stats": "webpack --json > stats.json"
   },
   "devDependencies": {
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.28.10",
     "extract-loader": "^1.0.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.10",
-    "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "html-webpack-plugin": "^3.2.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "node-sass": "^4.7.2",
@@ -27,6 +30,7 @@
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.2",
+    "url-loader": "^1.0.1",
     "vue-loader": "^14.1.1",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^4.1.1",
@@ -44,7 +48,7 @@
     "fastclick": "^1.0.6",
     "image-webpack-loader": "^4.2.0",
     "imagemin-webpack-plugin": "^2.1.0",
-    "iview": "^2.12.0",
+    "iview": "^2.13.0",
     "js-cookie": "^2.2.0",
     "js-md5": "^0.7.3",
     "jsonp": "^0.2.1",
@@ -56,7 +60,6 @@
     "vue-router": "^3.0.1",
     "vue-video-player": "^5.0.2",
     "vuex": "^3.0.1",
-    "webpack-cli": "^2.0.12",
-    "yanxiu-passport": "^1.0.6"
+    "webpack-cli": "^2.0.12"
   }
 }

@@ -76,7 +76,6 @@ const x = function(name, payload, useCache) {
 
             const commonQueries = getDataByMap(commonDataPicker.get(), config.commonQueries, getCommonQueryFilter(queries, data));
 
-        
             queries[porter.vipKey] =token?Object.assign(commonQueries,{token}):commonQueries;
         }
 

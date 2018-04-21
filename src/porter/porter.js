@@ -2,23 +2,28 @@
  * 守门人
  * @author chengxiao
  */
-import {validator, every} from '../lib/validator';
+import { validator, every } from '../lib/validator';
 import portals from './portals';
 import axios from 'axios';
 import qs from 'qs';
 import config from '../config.js';
-import {util} from '../lib/tools';
-const {isRealValue} = util;
+import { util } from '../lib/tools';
+const { isRealValue } = util;
 const pathSep = '/';
 const vipKey = '!';
 const { ENV } = config;
 
-const isMultipart=function(headers){
-   return headers && headers["Content-Type"] === 'multipart/form-data';
+const isMultipart = function (headers) {
+    return headers && headers["Content-Type"] === 'multipart/form-data';
+};
+
+const isApplicationJson = function (headers) {
+    return headers && headers["Content-Type"] === 'application/json';
 };
 
 // 根据规则抽取需要的对象
 function genPackage(raw, rules, allowExtraKeys) {
+
     raw = raw || {};
     rules = rules || {};
 
@@ -27,15 +32,15 @@ function genPackage(raw, rules, allowExtraKeys) {
         let rule = rules && rules[key];
         let hasRule = isRealValue(rule); // 是否有校验规则
 
-        if(vipKey === key) {
+        if (vipKey === key) {
             Object.assign(pack, value);
             return pack;
         }
 
-        if(hasRule) {
-            if(!validate(value, rule)) {
+        if (hasRule) {
+            if (!validate(value, rule)) {
                 // string 类型的规则值,被当作默认值
-                if('string' === typeof rule) {
+                if ('string' === typeof rule) {
                     pack[key] = rule;
                 } else {
                     throw new TypeError('Bad data value: "' + value + '" of key: "' + key + '"');
@@ -44,8 +49,8 @@ function genPackage(raw, rules, allowExtraKeys) {
                 pack[key] = value;
             }
         } else {
-            if(allowExtraKeys) {
-                if(isRealValue(value)) {
+            if (allowExtraKeys) {
+                if (isRealValue(value)) {
                     pack[key] = value;
                 }
             }
@@ -56,20 +61,20 @@ function genPackage(raw, rules, allowExtraKeys) {
 
 function genQueryStr(qobj) {
     const arr = [];
-    for(let key in qobj) {
+    for (let key in qobj) {
         arr.push(key + '=' + encodeURIComponent(qobj[key]));
     }
     return arr.join('&');
 }
 
 function validate(value, pattern) {
-    if(pattern === false) {
+    if (pattern === false) {
         return true;
     }
-    if(!isRealValue(value)) {
+    if (!isRealValue(value)) {
         return false;
     } else {
-        if(validator.isFn(pattern.test)) {
+        if (validator.isFn(pattern.test)) {
             return pattern.test(value);
         }
         return true;
@@ -81,10 +86,10 @@ function genUri() {
     let uri = 'error',
         key,
         params;
-    if(arguments.length > 1) {
+    if (arguments.length > 1) {
         uri = arguments[0];
         params = arguments[1];
-        for(key in params) {
+        for (key in params) {
             uri = uri.replace(`:${key}`, encodeURIComponent(params[key]));
         }
     }
@@ -98,16 +103,22 @@ function genUri() {
  * @param {Object} data 请求数据
  * @param {Object} params path中的参数/class/:id 同send
  */
-class Prepares{
+class Prepares {
     constructor(portalName, queries, data, params) {
         const portal = portals[portalName];
-        if(!portal) {
-            throw('Portal "' + portalName + '" not found.');
+        if (!portal) {
+            throw ('Portal "' + portalName + '" not found.');
         }
 
-        const headers = { };
+        const headers = {};
 
         const qobj = genPackage(queries, portal.queries, portal.allowExtraQueries);
+
+        if (qobj["token"]) {
+            headers['access-token'] = qobj["token"]
+            delete qobj["token"];
+        }
+
         let queryStr = genQueryStr(qobj);
 
         let currURI = location.pathname;
@@ -117,48 +128,58 @@ class Prepares{
         let uri = portal.uri;
 
         // format 和 ActionType是互斥的，后者优先级高
-        if(!('format' in qobj)) {
+        if (!('format' in qobj)) {
             headers['Action-Type'] = 'json';
         }
 
-        if(uri === '&' || uri === "@") {
+        if (uri === '&' || uri === "@") {
             uri = currURI + '?';
         } else {
-            if((/^http:\/\/|^https:\/\//).test(uri)&&uri.indexOf(pathSep) !== 0) {
+            if ((/^http:\/\/|^https:\/\//).test(uri) && uri.indexOf(pathSep) !== 0) {
                 uri = currPath + pathSep + uri;
             }
-            if(params) {
+            if (params) {
                 uri = genUri(uri, params);
             }
         }
 
-        if(config.MODE_DEBUG) {
+        if (config.MODE_DEBUG) {
             uri = '/async' + uri;
         }
 
-        if('post' === portal.method) {
-            headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        if ('post' === portal.method) {
+            if (portal.headers && portal.headers["Content-Type"]) {
+                headers['Content-Type'] = portal.headers["Content-Type"];
+            }
+            else {
+                headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            }
         }
 
         Object.assign(headers, portal.headers);
 
-        if(queryStr && uri.indexOf('?') !== -1) {
+        if (queryStr && uri.indexOf('?') !== -1) {
             queryStr = '&' + queryStr;
         }
         // 如果在portals中配置了 noHttpCache: true 则拼装随机值，防止缓存和阻塞
-        if(portal.noHttpCache) {
+        if (portal.noHttpCache) {
             queryStr = queryStr + "&" + Math.random()
         }
 
-        if(!isMultipart(headers)){
+        if (!isMultipart(headers)) {
             data = genPackage(data, portal.data, portal.allowExtraData);
+            // if(isApplicationJson(headers)){
+            //     data=JSON.stringify(data);
+            // }
         }
-
+        let url = uri;
+        if (queryStr) {
+            url = uri + "?" + queryStr;
+        }
         this.content = {
-            uri,
             queryStr,
             headers,
-            url: uri + "?"+queryStr,
+            url,
             data: data,
             method: portal.method
         };
@@ -168,7 +189,7 @@ class Prepares{
         return JSON.stringify(this.content);
     }
     isEqual(prepares) {
-        if(! (prepares instanceof Prepares) ) {
+        if (!(prepares instanceof Prepares)) {
             return false;
         }
         return this.toString() === prepares.toString();
@@ -177,13 +198,22 @@ class Prepares{
 
 }
 
-function send(prepares){
-    const {content} = prepares;
+function send(prepares) {
+    const { content } = prepares;
     return axios(content.url, {
         method: content.method,
         data: content.data,
         transformRequest: [data => {
-            return isMultipart(content.headers) ? '' : qs.stringify(data);
+            if (isMultipart(content.headers)) {
+                return "";
+            }
+            else if (isApplicationJson(content.headers)) {
+                return JSON.stringify(data);
+            }
+            else {
+                return qs.stringify(data)
+            }
+            // return isMultipart(content.headers) ? '' : qs.stringify(data);
         }],
         headers: content.headers
 
@@ -211,8 +241,8 @@ const porter = {
      */
     send(portalName, queries, data, params) {
         const portal = portals[portalName];
-        if(portal===null){
-            return new Promise(function(resolve, reject){
+        if (portal === null) {
+            return new Promise(function (resolve, reject) {
                 resolve({
                     data: {}
                 });
@@ -221,27 +251,26 @@ const porter = {
         }
         const prepares = new Prepares(portalName, queries, data, params);
         // 这货如果跟最后一个正在请求中的参数完全一致，认为重复发送
-        if(prepares.isEqual(requestingPrepares)) {
-            return new Promise(function(resolve, reject){
-            
+        if (prepares.isEqual(requestingPrepares)) {
+            return new Promise(function (resolve, reject) {
 
                 let res = {
-                        code: 1,
-                        error: {
-                            message: "请不要重复提交"
-                        }
-                    };
+                    code: 1,
+                    error: {
+                        message: "请不要重复提交"
+                    }
+                };
                 resolve({
-                    data: { tplData: res}
+                    data: { tplData: res }
                 });
-     
+
             });
         }
 
         requestingPrepares = prepares;
 
         return send(prepares).finally(res => {
-            if(requestingPrepares === prepares) {
+            if (requestingPrepares === prepares) {
                 requestingPrepares = null;
             }
 
