@@ -41,7 +41,6 @@ const portals = {
         queries: null,
         method: 'get',
         data: null
-
     },
     "collect-search-member": {
         uri: "/api/member/searchMemberByPhone",
@@ -96,12 +95,70 @@ const portals = {
             "Content-Type": "application/json"
         }
     },
-    category:{
-        uri:"/api/clothesCategory/list",
+    category: {
+        uri: "/api/clothesCategory/list",
         queries: null,
         method: 'get',
         data: null
+    },
+    saveCategory: {
+        uri: "/api/clothesCategory/save",
+        queries: null,
+        method: 'post',
+        data: {
+            "parentId": true,
+            "name": true,
+            "price": true,
+            "des": false,
+            "imageEntity": true
+        },
+        headers: {
+            "Content-Type": "application/json"
+        }
+    },
+    updateCategory: {
+        uri: "/api/clothesCategory/update",
+        queries: null,
+        method: 'post',
+        data: {
+            "id": true,
+            "parentId": true,
+            "name": true,
+            "price": true,
+            "des": false,
+            "imageEntity": false
+        },
+        headers: {
+            "Content-Type": "application/json"
+        }
+    },
+    deleteCategory: {
+        uri: "/api/clothesCategory/deleteById",
+        queries: null,
+        method: 'post',
+        data: {
+            "id": true
+        }
+    },
+    saveClothesOrder: {
+        uri: "/api/clothesOrder/save",
+        queries: null,
+        method: 'post',
+        data: {
+            "phone": true,
+            "categoryEntitySet":true,
+            "paymentEntity": true,
+            "stateEntity":true,
+            "imageSet": true
+        }
+    },
+    payment:{
+        uri: "/api/payment/list",
+        queries: null,
+        method: 'get',
+        data: null 
     }
+
 };
 
 // ==================== 通用数据接口end   =====================

@@ -39,7 +39,7 @@ const mockProxy={
 //     "/api": "http://127.0.0.1:9992"
 // }
 const serverProxy={
-    "/api": "http://192.168.1.170:8092"
+    "/api": "http://192.168.1.173:8092"
 }
 console.log(process.env.NODE_ENV);
 

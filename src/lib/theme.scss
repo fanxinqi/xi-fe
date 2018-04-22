@@ -26,10 +26,12 @@ html,body{
   .HolyGrail-body {
     display: flex;
     flex: 1;
+   
   }
   
   .HolyGrail-content {
     flex: 7;
+  
     .header{
     
     }
@@ -40,7 +42,7 @@ html,body{
     }
     .content{   
         padding: 10px;
-        height: 100%;
+        // height: 100%;
     }
   }
   

@@ -36,7 +36,6 @@ const  MENU_GROUP=[
                 name:"store",
                 icon:"ios-home-outline"
             },
-            ,
             {
                 roleIds:[10001100,10001200,10002100,10002200],
                 name:"category",

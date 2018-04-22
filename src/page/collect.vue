@@ -13,7 +13,6 @@
         <div class="member-order">
             <Card >
                 <div class="order-form">
-                  
                     <div class="member-info">
                         <div class="title">会员信息</div>
                         <Form ref="formValidate" :model="formValidate"  :label-width="80">
@@ -24,7 +23,6 @@
                                 <div class="item">
                                     <div class="phone">
                                         <Input  size="large" v-model="formValidate.phone" placeholder="请输入手机号" ></Input>
-                                        
                                     </div> 
                                     <Button type="success"  @click="searchMember" >查询</Button>
                                  </div>
@@ -32,6 +30,13 @@
                              <div class="detail">
                                 <div class="item">
                                      <Input  size="large" v-model="formValidate.name" placeholder="请输入姓名"></Input> 
+                                 </div>                           
+                            </div>
+                             <div class="detail">
+                                <div class="item">
+                                    <Select v-model="formValidate.payment" style="width:200px">
+                                        <Option v-for="item in formValidate.payment" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                                    </Select>
                                  </div>                           
                             </div>
                         </Form>
@@ -53,10 +58,10 @@
                     <Table :columns="columns7"  size="large" :data="selectCategroyData"></Table>
                 </div>
                 <div class="button">
-                    <div class="total">数量：共5件</div>
-                    <div class="total">应收金额：10元</div>
+                    <div class="total">数量：共{{total}}件</div>
+                    <div class="total">应收金额：{{amount}}元</div>
                     <div class="button-group">
-                            <Button type="primary" @click="save()">完成支付</Button>
+                          <Button type="primary" @click="save()">完成支付</Button>
                     </div>
                 </div>
                 
@@ -76,13 +81,25 @@ export default {
       formValidate: {
         phone: "",
         name: "",
-        headUrl
+        headUrl,
+        payment:[]
       },
-
       selectCategroyData: [],
       categroyColumns: [
         {
-          title: "名称",
+          title: "缩略图",
+          align: "center",
+          render: (h, params) => {
+            const row = params.row;
+            return h("img", {
+              attrs: {
+                src: row.imageEntity ? row.imageEntity.url : ""
+              }
+            });
+          }
+        },
+        {
+          title: "分类",
           key: "name"
         },
         {
@@ -92,15 +109,27 @@ export default {
       ],
       columns7: [
         {
-          title: "序号",
+          title: "缩略图",
+          align: "center",
+          render: (h, params) => {
+            const row = params.row;
+            return h("img", {
+              attrs: {
+                src: row.imageEntity ? row.imageEntity.url : ""
+              }
+            });
+          }
+        },
+        {
+          title: "分类",
           key: "name"
         },
         {
-          title: "名称",
-          key: "phone"
+          title: "价格",
+          key: "price"
         },
         {
-          title: "价格",
+          title: "备注",
           key: "des"
         },
         {
@@ -116,7 +145,8 @@ export default {
                 <a
                   href="javascript:;"
                   style="margin-right:10px;"
-                  onClick={remove}>
+                  onClick={remove}
+                >
                   删除
                 </a>
               </span>
@@ -125,6 +155,30 @@ export default {
         }
       ]
     };
+  },
+  created(){
+     this.$store.dispatch("proxyAction", {
+          name: "payment",
+          queries: null,
+          message: false
+        })
+        .then(res => {
+            this.formValidate.payment=res.data.data;
+        });
+  },
+  computed: {
+    total() {
+      return this.selectCategroyData.length;
+    },
+    amount() {
+      let amount = 0;
+
+      this.selectCategroyData.forEach(item => {
+        amount += item.price;
+      });
+
+      return amount;
+    }
   },
   methods: {
     removeCategroy(params) {
@@ -153,9 +207,9 @@ export default {
         .then(res => {
           let member = res.data.data;
           if (member) {
-            this.formValidate =Object.assign(this.formValidate,res.data.data);
-            if(!this.formValidate.headUrl){
-              this.formValidate.headUrl=headUrl;
+            this.formValidate = Object.assign(this.formValidate, res.data.data);
+            if (!this.formValidate.headUrl) {
+              this.formValidate.headUrl = headUrl;
             }
           } else {
             this.reset();
@@ -178,7 +232,12 @@ export default {
   flex-direction: row;
   .categroy {
     width: 700px;
+    img {
+      width: 30px;
+      height: 30px;
+    }
   }
+
   .member-order {
     flex: 1;
     .order-form {
@@ -221,6 +280,10 @@ export default {
   background: #f8f8fe;
   bottom: 30px;
   width: 100%;
+  img {
+    width: 30px;
+    height: 30px;
+  }
   .total {
     line-height: 30px;
   }
