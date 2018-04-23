@@ -37,7 +37,7 @@ const portals = {
         }
     },
     "collect": {
-        uri: "/api/clothesCategory/list",
+        uri: "/api/collectClothes/init",
         queries: null,
         method: 'get',
         data: null

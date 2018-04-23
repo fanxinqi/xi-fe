@@ -4,8 +4,8 @@
         <div class="categroy">
             <Card>
                 <Tabs value="name1">
-                    <TabPane  v-for="(item,index) in this.data.content" :label="item.name" :name="item.name" v-if="item.parentId==0">
-                        <Table :columns="categroyColumns" size="large"  :data="item.childrenClothesCategoryEntitySet" @on-row-click="selectCategroy"></Table>
+                    <TabPane  v-for="(item,index) in this.data.categoryList" :label="item.name" :name="item.name" v-if="item.parentId==0">
+                        <Table :columns="categroyColumns" size="middle"  :data="item.childrenClothesCategoryEntitySet" @on-row-click="selectCategroy"></Table>
                     </TabPane>
                 </Tabs>
             </Card>
@@ -22,20 +22,20 @@
                             <div class="detail">
                                 <div class="item">
                                     <div class="phone">
-                                        <Input  size="large" v-model="formValidate.phone" placeholder="请输入手机号" ></Input>
+                                        <Input  size="middle" v-model="formValidate.phone" placeholder="请输入手机号" ></Input>
                                     </div> 
                                     <Button type="success"  @click="searchMember" >查询</Button>
                                  </div>
                              </div>
                              <div class="detail">
                                 <div class="item">
-                                     <Input  size="large" v-model="formValidate.name" placeholder="请输入姓名"></Input> 
+                                     <Input  size="middle" v-model="formValidate.name" placeholder="请输入姓名"></Input> 
                                  </div>                           
                             </div>
                              <div class="detail">
                                 <div class="item">
                                     <Select v-model="formValidate.payment.id" style="width:200px">
-                                        <Option v-for="item in payment" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                                        <Option v-for="item in data.paymentList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                                     </Select>
                                  </div>                           
                             </div>
@@ -77,7 +77,7 @@
             <div class="bottom-card">  
                 <div class="order-info">
                     <div class="title">订单信息</div>
-                    <Table :columns="columns7"  size="large" :data="selectCategroyData"></Table>
+                    <Table :columns="columns7"  size="middle" :data="selectCategroyData"></Table>
                 </div>
                 <div class="button">
                     <div class="total">数量：共{{total}}件</div>
@@ -224,7 +224,7 @@ export default {
       .then(res => {
         this.$Notice.success({
                       title: '提醒',
-                      desc: `该衣服的货架号：${res.data.storageNum}`,
+                      desc: `该衣服的货架号：${res.data.data.storageNum}`,
                   });
       });
     },
@@ -297,6 +297,9 @@ export default {
       overflow-y: scroll;
       .member-info {
         flex: 1;
+          .ivu-form-item{
+              margin-bottom: 0px !important;
+          }
         .ivu-form-item-content {
           margin-left: 0px !important;
           text-align: center;
@@ -317,7 +320,7 @@ export default {
             width: 250px;
             .image{
               width:50px;
-              height: 50%;
+              height: 50px;
             }
           }
         }

@@ -40,6 +40,7 @@
 
         ul {
             position: relative;
+            width: 140px !important;
         }
 
         .router-link-active {
