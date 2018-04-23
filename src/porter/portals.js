@@ -139,11 +139,17 @@ const portals = {
         queries: null,
         method: 'post',
         data: {
+            "name":false,
             "phone": true,
             "categoryEntitySet": true,
-            "paymentEntity": true,
+            "payment": true,
             "stateEntity": true,
-            "imageSet": true
+            "imageSet": true,
+            "storeId":false,
+            "headUrl":false
+        },
+        headers: {
+            "Content-Type": "application/json"
         }
     },
     payment: {

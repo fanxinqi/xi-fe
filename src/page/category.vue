@@ -1,6 +1,6 @@
 <style lang="less">
 .categroy-tree {
-   overflow-y: auto;
+  overflow-y: auto;
   .ivu-tree-arrow {
     cursor: pointer;
     font-size: 30px !important;
@@ -51,11 +51,11 @@
 
 <template>
 <div>
-  <Button type="primary" @click="add">添加分类</Button>
-  <Tree :data="treeData" :render="renderContent" class="categroy-tree"></Tree>
+    <Button type="primary" @click="add">添加分类</Button>
+    <Tree :data="treeData" :render="renderContent" class="categroy-tree"></Tree>
     <Modal v-model="show" title="编辑分类" okText="" cancelText="">
         <category-edit :form-data="formData"></category-edit>  
-  </Modal>
+    </Modal>
 </div>
 </template>
 <script>
@@ -166,49 +166,56 @@ export default {
               }
             },
             [
-              h("Button", {
-                props: Object.assign({}, this.buttonProps),
-                style: {
-                  marginRight: "8px"
+              h(
+                "Button",
+                {
+                  props: Object.assign({}, this.buttonProps),
+                  style: {
+                    marginRight: "8px"
+                  },
+                  on: {
+                    click: () => {
+                      // this.append(data);
+                      debugger;
+                      this.formData = {
+                        parentId: data.id,
+                        name: "",
+                        price: "",
+                        des: "",
+                        imageEntity: {
+                          id: "",
+                          url: ""
+                        }
+                      };
+                      this.show = true;
+                    }
+                  }
                 },
-                on: {
-                  click: () => {
-                    // this.append(data);
-                    debugger;
-                    this.formData = {
-                      parentId: data.id,
-                      name: "",
-                      price: "",
-                      des: "",
-                      imageEntity: {
-                        id: "",
-                        url: ""
-                      }
-                    };
-                    this.show = true;
-                  }
-                }
-              },
-              "新增"),
-              h("Button", {
-                props: Object.assign({}, this.buttonProps),
-                on: {
-                  click: () => {
-                    this.update(root, node, data);
-                  }
-                }
-              },
-              "编辑"
+                "新增"
               ),
-              h("Button", {
-                props: Object.assign({}, this.buttonProps),
-                on: {
-                  click: () => {
-                    this.remove(root, node, data);
+              h(
+                "Button",
+                {
+                  props: Object.assign({}, this.buttonProps),
+                  on: {
+                    click: () => {
+                      this.update(root, node, data);
+                    }
                   }
-                }
-              },
-              "删除"
+                },
+                "编辑"
+              ),
+              h(
+                "Button",
+                {
+                  props: Object.assign({}, this.buttonProps),
+                  on: {
+                    click: () => {
+                      this.remove(root, node, data);
+                    }
+                  }
+                },
+                "删除"
               )
             ]
           )
@@ -236,9 +243,9 @@ export default {
       });
       this.$set(data, "children", children);
     },
-    update(root, node, data){
-       this.formData = {
-        id:data.id,
+    update(root, node, data) {
+      this.formData = {
+        id: data.id,
         name: "",
         price: "",
         des: "",

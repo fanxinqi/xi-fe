@@ -34,11 +34,33 @@
                             </div>
                              <div class="detail">
                                 <div class="item">
-                                    <Select v-model="formValidate.payment" style="width:200px">
-                                        <Option v-for="item in formValidate.payment" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                                    <Select v-model="formValidate.payment.id" style="width:200px">
+                                        <Option v-for="item in payment" :value="item.id" :key="item.id">{{ item.name }}</Option>
                                     </Select>
                                  </div>                           
                             </div>
+
+                             <div class="detail">
+                                <div class="item">
+                                       
+                                      <img v-for="item in formValidate.imageSet" :src="item.url" class="image">
+                                      <Upload
+                                          ref="upload"
+                                          :show-upload-list="false"
+                                          :on-success="handleSuccess"
+                                          :format="['jpg','jpeg','png']"
+                                          :max-size="2048"
+                                          multiple
+                                          type="drag"
+                                          action="/api/attachment/upload"
+                                          style="display: inline-block;width:58px;">
+                                          <div style="width: 58px;height:58px;line-height: 58px;">
+                                              <Icon type="camera" size="20"></Icon>
+                                          </div>
+                                      </Upload>
+                                </div>                           
+                            </div>
+                            
                         </Form>
                         <div class="button-group">
                              <!-- <Button type="primary" @click="save()">下单</Button> -->
@@ -82,8 +104,15 @@ export default {
         phone: "",
         name: "",
         headUrl,
-        payment:[]
+        categoryEntitySet: [],
+        stateEntity: {
+          id: 1
+        },
+        storeId:1,
+        payment: {id:1},
+        imageSet: []
       },
+      payment:[],
       selectCategroyData: [],
       categroyColumns: [
         {
@@ -156,15 +185,16 @@ export default {
       ]
     };
   },
-  created(){
-     this.$store.dispatch("proxyAction", {
-          name: "payment",
-          queries: null,
-          message: false
-        })
-        .then(res => {
-            this.formValidate.payment=res.data.data;
-        });
+  created() {
+    this.$store
+      .dispatch("proxyAction", {
+        name: "payment",
+        queries: null,
+        message: false
+      })
+      .then(res => {
+        this.payment = res.data.data;
+      });
   },
   computed: {
     total() {
@@ -181,6 +211,26 @@ export default {
     }
   },
   methods: {
+    save(){
+      this.formValidate.categoryEntitySet=this.selectCategroyData;
+      console.log(JSON.stringify(this.formValidate));
+       this.$store
+      .dispatch("proxyAction", {
+        name: "saveClothesOrder",
+        queries: null,
+        data:this.formValidate,
+        message: false
+      })
+      .then(res => {
+        this.$Notice.success({
+                      title: '提醒',
+                      desc: `该衣服的货架号：${res.data.storageNum}`,
+                  });
+      });
+    },
+    handleSuccess (res, file) {
+      this.formValidate.imageSet.push(res.data);
+    },
     removeCategroy(params) {
       // this.selectCategroyData.remove(params.index)
       this.selectCategroyData.splice(params.index, 1);
@@ -252,8 +302,8 @@ export default {
           text-align: center;
         }
         .head {
-          height: 150px;
-          width: 150px;
+          height: 100px;
+          width: 100px;
           border-radius: 50%;
         }
         .phone {
@@ -261,10 +311,14 @@ export default {
         }
         .detail {
           // text-align: center;
-          padding: 10px 50px;
+          padding: 5px 50px;
           .item {
             display: inline-block;
             width: 250px;
+            .image{
+              width:50px;
+              height: 50%;
+            }
           }
         }
       }

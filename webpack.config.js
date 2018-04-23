@@ -35,12 +35,12 @@ const mockProxy={
     }
 }
 
-// const serverProxy={
-//     "/api": "http://127.0.0.1:9992"
-// }
 const serverProxy={
-    "/api": "http://10.10.15.56:8092"
+    "/api": "http://127.0.0.1:9994"
 }
+// const serverProxy={
+//     "/api": "http://10.10.15.56:8092"
+// }
 console.log(process.env.NODE_ENV);
 
 const webpackConfig={
@@ -106,20 +106,20 @@ const webpackConfig={
                'sass-loader'
             ]
           },
-            {
-                test: /\.(css|scss)$/,
-                exclude: /(node_modules|bower_components|src\/lib\/exculde)/,
-                use: [
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            config: {
-                                path: './postcss.config.js'
-                            }
-                        }
-                    }
-                ]
-            },
+            // {
+            //     test: /\.(css|scss)$/,
+            //     exclude: /(node_modules|bower_components|src\/lib\/exculde)/,
+            //     use: [
+            //         {
+            //             loader: 'postcss-loader',
+            //             options: {
+            //                 config: {
+            //                     path: './postcss.config.js'
+            //                 }
+            //             }
+            //         }
+            //     ]
+            // },
           {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             use:[
