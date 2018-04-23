@@ -39,7 +39,7 @@ const mockProxy={
 //     "/api": "http://127.0.0.1:9992"
 // }
 const serverProxy={
-    "/api": "http://192.168.1.173:8092"
+    "/api": "http://10.10.15.56:8092"
 }
 console.log(process.env.NODE_ENV);
 
@@ -182,7 +182,8 @@ const webpackConfig={
     //    host: "127.0.0.1",
     //   host: "192.168.9.111",
        // host: "192.168.7.71",
-       proxy: serverProxy
+        proxy: serverProxy,
+        port:8090
     }
 }
 

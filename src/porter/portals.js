@@ -111,9 +111,6 @@ const portals = {
             "price": true,
             "des": false,
             "imageEntity": true
-        },
-        headers: {
-            "Content-Type": "application/json"
         }
     },
     updateCategory: {
@@ -127,9 +124,6 @@ const portals = {
             "price": true,
             "des": false,
             "imageEntity": false
-        },
-        headers: {
-            "Content-Type": "application/json"
         }
     },
     deleteCategory: {
@@ -146,19 +140,80 @@ const portals = {
         method: 'post',
         data: {
             "phone": true,
-            "categoryEntitySet":true,
+            "categoryEntitySet": true,
             "paymentEntity": true,
-            "stateEntity":true,
+            "stateEntity": true,
             "imageSet": true
         }
     },
-    payment:{
+    payment: {
         uri: "/api/payment/list",
         queries: null,
         method: 'get',
-        data: null 
-    }
-
+        data: null
+    },
+    store: {
+        uri: "/api/store/list",
+        queries: {
+            name: false,
+            page: false
+        },
+        method: 'get',
+        data: null
+    },
+    "saveStore": {
+        uri: "/api/store/save",
+        queries: null,
+        method: 'post',
+        data: {
+            name: true,
+            des: true,
+            address: true,
+            imageEntity: false,
+            storeLaundryExpertSet: false
+        },
+        headers: {
+            "Content-Type": "application/json"
+        }
+    },
+    "updateStore": {
+        uri: "/api/store/update",
+        queries: null,
+        method: 'post',
+        data: {
+            id: true,
+            name: true,
+            des: true,
+            address: true,
+            imageEntity: false,
+            storeLaundryExpertSet: false
+        },
+        headers: {
+            "Content-Type": "application/json"
+        }
+    },
+    "searchStore": {
+        uri: "/api/store/searchByName",
+        queries: {
+            name: true
+        },
+        method: 'get',
+        data: null
+    },
+    "deleteStoreById": {
+        uri: "/api/store/deleteById",
+        queries: null,
+        method: 'post',
+        data: {
+            id: true,
+        },
+    },
+    order: {
+        uri: "/api/clothesOrder/list",
+        queries: null,
+        method: 'get',
+        data: null
+    },
 };
 
 // ==================== 通用数据接口end   =====================
