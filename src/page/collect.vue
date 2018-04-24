@@ -5,7 +5,7 @@
             <Card>
                 <Tabs value="name1">
                     <TabPane  v-for="(item,index) in this.data.categoryList" :label="item.name" :name="item.name" v-if="item.parentId==0">
-                        <Table :columns="categroyColumns" size="middle"  :data="item.childrenClothesCategoryEntitySet" @on-row-click="selectCategroy"></Table>
+                        <Table :columns="categroyColumns"  :data="item.childrenClothesCategoryEntitySet" @on-row-click="selectCategroy"></Table>
                     </TabPane>
                 </Tabs>
             </Card>
@@ -22,14 +22,14 @@
                             <div class="detail">
                                 <div class="item">
                                     <div class="phone">
-                                        <Input  size="middle" v-model="formValidate.phone" placeholder="请输入手机号" ></Input>
+                                        <Input  v-model="formValidate.phone" placeholder="请输入手机号" ></Input>
                                     </div> 
                                     <Button type="success"  @click="searchMember" >查询</Button>
                                  </div>
                              </div>
                              <div class="detail">
                                 <div class="item">
-                                     <Input  size="middle" v-model="formValidate.name" placeholder="请输入姓名"></Input> 
+                                     <Input   v-model="formValidate.name" placeholder="请输入姓名"></Input> 
                                  </div>                           
                             </div>
                              <div class="detail">
@@ -77,7 +77,7 @@
             <div class="bottom-card">  
                 <div class="order-info">
                     <div class="title">订单信息</div>
-                    <Table :columns="columns7"  size="middle" :data="selectCategroyData"></Table>
+                    <Table :columns="columns7"  :data="selectCategroyData"></Table>
                 </div>
                 <div class="button">
                     <div class="total">数量：共{{total}}件</div>
@@ -186,15 +186,6 @@ export default {
     };
   },
   created() {
-    this.$store
-      .dispatch("proxyAction", {
-        name: "payment",
-        queries: null,
-        message: false
-      })
-      .then(res => {
-        this.payment = res.data.data;
-      });
   },
   computed: {
     total() {

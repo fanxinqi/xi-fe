@@ -1,1 +1,1 @@
-rsync -av ./dist root@192.168.30.237:/App/install/SRT/web/yanxiu-live/yanxiu-live-manager/static
+rsync -av ./xi root@139.199.37.14:/webapp/static/
