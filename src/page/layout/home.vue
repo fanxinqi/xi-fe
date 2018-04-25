@@ -10,9 +10,9 @@
             </section>
             <section class="content">
                 <transition name="fade" mode="out-in">
-                    <Card :bordered="false">
+                    <!-- <Card :bordered="false"> -->
                         <router-view></router-view>
-                    </Card>
+                    <!-- </Card> -->
                 </transition> 
             </section>
         </main>

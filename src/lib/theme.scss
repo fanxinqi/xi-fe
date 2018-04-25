@@ -11,7 +11,6 @@ html,body{
     height: 100%;
 }
 
-
 .HolyGrail {
     display: flex;
     min-height: 100vh;
@@ -22,7 +21,7 @@ html,body{
   footer {
     flex: 1;
   }
-  
+
   .HolyGrail-body {
     display: flex;
     flex: 1;
@@ -31,7 +30,8 @@ html,body{
   
   .HolyGrail-content {
     flex: 7;
-  
+    height: 100vh;
+    overflow-y: scroll;
     .header{
     
     }
@@ -43,19 +43,22 @@ html,body{
     .content{   
         padding: 10px;
         // height: 100%;
+        overflow-x: hidden;
     }
   }
   
   .HolyGrail-nav, .HolyGrail-ads {
     /* 两个边栏的宽度设为12em */
     flex: 0 0 12em;
+  
   }
   
   .HolyGrail-nav {
     /* 导航放到最左边 */
     order: -1;
     //flex: 1;
-    background: #495060
+    background: #495060;
+    height:100vh;
   }
 
 
@@ -79,21 +82,21 @@ html,body{
           margin-left:10px;
       }
   }
-  .ivu-menu-item-active:not(.ivu-menu-submenu),
-  .ivu-menu-submenu-title-active:not(.ivu-menu-submenu){
-    color:$color !important;
-    border-right: 2px solid $color !important;
-  }
-  .ivu-menu-light{
-    .ivu-menu-item:hover{
-        color:$color !important;
-        border-bottom: 2px solid $color !important;
-    }    
-  }
- .ivu-menu-submenu:hover{
-    color:$color !important;
-    border-bottom: 2px solid $color !important; 
- }
+//   .ivu-menu-item-active:not(.ivu-menu-submenu),
+//   .ivu-menu-submenu-title-active:not(.ivu-menu-submenu){
+//     color:$color !important;
+//     border-right: 2px solid $color !important;
+//   }
+//   .ivu-menu-light{
+//     .ivu-menu-item:hover{
+//         color:$color !important;
+//         border-bottom: 2px solid $color !important;
+//     }    
+//   }
+//  .ivu-menu-submenu:hover{
+//     color:$color !important;
+//     border-bottom: 2px solid $color !important; 
+//  }
  .ivu-breadcrumb a:hover{
     color:$color !important;
  }
