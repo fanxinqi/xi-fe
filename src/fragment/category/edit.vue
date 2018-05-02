@@ -12,7 +12,7 @@
             <Input v-model="formData.name" placeholder="请输入你的名字"></Input>
         </FormItem>
         <FormItem label="图片">
-            <img :src="formData.imageEntity.url" class="head">
+            <img :src="formData.imageEntity.url" v-if="formData.imageEntity.url" class="head">
             <Upload
                 ref="upload"
                 :show-upload-list="false"
