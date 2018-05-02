@@ -1,1 +1,1 @@
-rsync -av ./xi root@139.199.37.14:/webapp/static/
+rsync -av ./xi root@139.199.37.14:/usr/share/nginx/html/
