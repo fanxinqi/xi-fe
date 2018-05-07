@@ -224,6 +224,7 @@ const portals = {
         uri: "/api/clothesOrder/list",
         queries: null,
         method: 'get',
+        allowExtraQueries: true,
         data: null
     },
     updateClothesOrder: {
