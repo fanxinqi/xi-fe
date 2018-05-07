@@ -1,9 +1,14 @@
 <style lang="less">
+.tree-header{
+  padding: 20px 0px;
+}
 .categroy-tree {
-  overflow-y: auto;
+  // overflow-y: auto;
+  background: #ffffff;
+  padding: 20px;
   .ivu-tree-arrow {
     cursor: pointer;
-    font-size: 30px !important;
+    font-size: 25px !important;
     line-height: 60px !important;
     width: 26px !important;
     height: 60px !important;
@@ -24,9 +29,10 @@
     line-height: 60px;
     display: inline-block;
     vertical-align: top;
-    color: teal;
-    padding: 0 20px;
-    font-size: 20px;
+    font-size: 16px;
+
+    padding: 0px 95px;
+    width: 100px;
   }
   .ivu-btn-small {
     // padding: 4px 20px !important;
@@ -35,13 +41,16 @@
   }
   .ivu-tree-children {
     .row {
+      border-bottom: 1px solid #e9eaec;
       &:hover {
         background: #f8f8f9;
       }
       .first {
-        font-weight: bolder;
+        font-weight: bold;
+     
         .cell {
-          font-size: 25px !important;
+          font-size: 18px !important;
+          padding: 0;
         }
       }
     }
@@ -51,7 +60,9 @@
 
 <template>
 <div>
-    <Button type="primary" @click="add">添加分类</Button>
+    <div class="tree-header">
+        <Button type="primary" @click="add">添加一级分类</Button>
+    </div>
     <Tree :data="treeData" :render="renderContent" class="categroy-tree"></Tree>
     <Modal v-model="show" title="编辑分类" okText="" cancelText="">
         <category-edit :form-data="formData"></category-edit>  
@@ -101,6 +112,7 @@ export default {
           parentId: item.parentId,
           imageEntity: item.imageEntity,
           price: item.price,
+          des:item.des,
           expand: true,
           children: this.parase(item.childrenClothesCategoryEntitySet)
         });
@@ -169,14 +181,15 @@ export default {
               h(
                 "Button",
                 {
-                  props: Object.assign({}, this.buttonProps),
+                  props: {
+                    type:"primary"
+                  },
                   style: {
                     marginRight: "8px"
                   },
                   on: {
                     click: () => {
-                      // this.append(data);
-                      debugger;
+                      // this.append(data)
                       this.formData = {
                         parentId: data.id,
                         name: "",
@@ -191,24 +204,32 @@ export default {
                     }
                   }
                 },
-                "新增"
+                "添加"
               ),
               h(
                 "Button",
                 {
-                  props: Object.assign({}, this.buttonProps),
+                  props: {
+                    type:"info"
+                  },
+                  style: {
+                    marginRight: "8px"
+                  },
                   on: {
                     click: () => {
                       this.update(root, node, data);
                     }
                   }
                 },
-                "编辑"
+                "修改"
               ),
               h(
                 "Button",
                 {
-                  props: Object.assign({}, this.buttonProps),
+                  props: { type:"warning"},
+                  style: {
+                    marginRight: "8px"
+                  },
                   on: {
                     click: () => {
                       this.remove(root, node, data);
@@ -246,10 +267,10 @@ export default {
     update(root, node, data) {
       this.formData = {
         id: data.id,
-        name: "",
-        price: "",
-        des: "",
-        imageEntity: {
+        name: data.title,
+        price:data.price,
+        des: data.des,
+        imageEntity: data.imageEntity||{
           id: "",
           url: ""
         }

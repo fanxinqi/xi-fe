@@ -12,7 +12,7 @@
             <Input v-model="formData.name" placeholder="请输入你的名字"></Input>
         </FormItem>
         <FormItem label="图片">
-            <img :src="formData.imageEntity.url" class="head">
+            <img :src="formData.imageEntity.url" v-if="formData.imageEntity.url" class="head">
             <Upload
                 ref="upload"
                 :show-upload-list="false"
@@ -51,7 +51,7 @@ export default {
       formValidate: this.formData || { name: "", img: "", price: "", des: "",parentId:0 },
       ruleValidate: {
         name: [{ required: true, message: "分类名不能为空", trigger: "blur" }],
-        price: [{ required: true, message: "价格不能为空", trigger: "blur" }]
+        price: [{ required: true, message: "价格不能为空" }]
       }
     };
   },
