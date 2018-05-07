@@ -220,6 +220,23 @@ const portals = {
         method: 'get',
         data: null
     },
+    updateClothesOrder: {
+        uri: "/api/clothesOrder/update",
+        queries: null,
+        method: 'post',
+        data: {
+            "id":true,
+            "phone": true,
+            "categoryEntitySet": true,
+            "paymentEntity": true,
+            "stateEntity": true,
+            "imageSet": true,
+            "storeId":false,
+        },
+        headers: {
+            "Content-Type": "application/json"
+        }
+    },
 };
 
 // ==================== 通用数据接口end   =====================
