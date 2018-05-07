@@ -51,7 +51,7 @@ export default {
       formValidate: this.formData || { name: "", img: "", price: "", des: "",parentId:0 },
       ruleValidate: {
         name: [{ required: true, message: "分类名不能为空", trigger: "blur" }],
-        price: [{ required: true, message: "价格不能为空", trigger: "blur" }]
+        price: [{ required: true, message: "价格不能为空" }]
       }
     };
   },

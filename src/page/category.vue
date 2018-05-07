@@ -112,6 +112,7 @@ export default {
           parentId: item.parentId,
           imageEntity: item.imageEntity,
           price: item.price,
+          des:item.des,
           expand: true,
           children: this.parase(item.childrenClothesCategoryEntitySet)
         });
@@ -188,8 +189,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      // this.append(data);
-                      debugger;
+                      // this.append(data)
                       this.formData = {
                         parentId: data.id,
                         name: "",
@@ -267,10 +267,10 @@ export default {
     update(root, node, data) {
       this.formData = {
         id: data.id,
-        name: "",
-        price: "",
-        des: "",
-        imageEntity: {
+        name: data.title,
+        price:data.price,
+        des: data.des,
+        imageEntity: data.imageEntity||{
           id: "",
           url: ""
         }

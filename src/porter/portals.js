@@ -111,6 +111,9 @@ const portals = {
             "price": true,
             "des": false,
             "imageEntity": true
+        },
+        headers: {
+            "Content-Type": "application/json"
         }
     },
     updateCategory: {
@@ -119,11 +122,14 @@ const portals = {
         method: 'post',
         data: {
             "id": true,
-            "parentId": true,
+            "parent_id": true,
             "name": true,
             "price": true,
             "des": false,
             "imageEntity": false
+        },
+        headers: {
+            "Content-Type": "application/json"
         }
     },
     deleteCategory: {
