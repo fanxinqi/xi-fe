@@ -17,29 +17,34 @@ const  MENU_GROUP=[
         name:"",
         menus:[
             {
-                roleIds:[10001100,10001200,10002100,10002200],
+                roleIds:[2],
                 name:"collect",
                 icon:"tshirt"
             },
             {
-                roleIds:[10001100,10001200,10002100,10002200],
+                roleIds:[1,2],
                 name:"order",
                 icon:"android-list"
             },
             {
-                roleIds:[10001100,10001200,10002100,10002200],
+                roleIds:[1,2],
                 name:"member",
                 icon:"person-stalker"
             },
             {
-                roleIds:[10001100,10001200,10002100,10002200],
+                roleIds:[1],
                 name:"store",
                 icon:"ios-home-outline"
             },
             {
-                roleIds:[10001100,10001200,10002100,10002200],
+                roleIds:[1],
                 name:"category",
                 icon:"images"
+            },
+            {
+                roleIds:[1],
+                name:"user",
+                icon:"person"
             }
         ]
     }

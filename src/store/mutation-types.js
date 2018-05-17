@@ -9,5 +9,6 @@ export default {
     JUMP: 'jump',
     MESSAGE: 'message',
     PAGE_LOADING: 'page-loading',
-    TOKEN: 'token'
+    TOKEN: 'token',
+    USER:'user'
 };

@@ -6,7 +6,7 @@
         <div class="menus">
             <Menu :theme="theme3" @on-select="select"  active-key="1" v-for="(group,gidx) in menuGroups" :key="gidx">
                 <!-- <Menu-group v-for="(group,gidx) in menuGroups" :key="gidx" :title="group.groupName" > -->
-                    <Menu-item v-for="(menu,idx) in group.menus" :name="menu.name"  :key="menu.name"  >
+                    <Menu-item v-for="(menu,idx) in group.menus" :name="menu.name"  :key="menu.name"  v-if="menu.isShow" >
                         <Icon :type="menu.icon"></Icon><span class="title">{{menu.title}}</span>
                     </Menu-item>
                 <!-- </Menu-group> -->
@@ -95,9 +95,9 @@
         let isHide=false;
         config.MENU_GROUP.forEach(function(item){
                 let menus=[];
-              
                 for(let i in item.menus){
                     const routeName= item.menus[i].name
+                    const roleIds=item.menus[i].roleIds;
                     let router= routers.find(function(value, index, arr) {
                         return value.name ===routeName;
                     })||{}
@@ -107,7 +107,13 @@
                     else{
                         router["isCurrent"]=false;
                     }
-                    router["isShow"]=true;
+                    router["isShow"]=false;
+                    if(me.$store.state.user&&roleIds.some((roleId)=>{
+                        return me.$store.state.user.roleId==roleId;
+                    })){
+                        router["isShow"]=true;     
+                    }
+              
                     router["icon"]=item.menus[i].icon || ""
                     hideNum++
                     menus.push(router);

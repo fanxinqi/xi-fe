@@ -11,7 +11,8 @@ const state = {
     isPageLoading: false,
     message: '',// 结果信息,
     token: localStorage.getItem('token'),
-    error: 0
+    error: 0,
+    user:JSON.parse(localStorage.getItem('user'))
 };
 
 const getters = {};

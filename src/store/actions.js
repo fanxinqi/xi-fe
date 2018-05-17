@@ -48,6 +48,7 @@ const actions = {
         }).then((res) => {
             commit(types.LOGIN);
             commit(types.TOKEN, res.data.data.token);
+            commit(types.USER, res.data.data);
             window.location.reload();
         }).catch((err) => {
             commit(types.MESSAGE, err.msg || '登录失败');
@@ -57,6 +58,7 @@ const actions = {
 
     logout({ commit, dispatch }) {
         commit(types.LOGOUT);
+        commit(types.TOKEN,"")
     },
 
     /**

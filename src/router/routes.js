@@ -6,7 +6,7 @@ const routes = {
             name: 'login',
             path: 'login',
             parent: '',
-            title: '>data.data.projectInfo.projectName=登录<',
+            title: '>=登录<',
             dataPath: 'data',
             noCache: true
         },
@@ -14,7 +14,7 @@ const routes = {
             name: 'member',
             path: 'member',
             parent: '',
-            title: '>data.data.projectInfo.projectName=会员<',
+            title: '>=会员<',
             dataPath: 'data',
             noCache: true
         },
@@ -22,7 +22,7 @@ const routes = {
             name: 'order',
             path: 'order',
             parent: '',
-            title: '>data.data.projectInfo.projectName=订单<',
+            title: '>=订单<',
             dataPath: 'data',
             noCache: true
         },
@@ -30,7 +30,7 @@ const routes = {
             name: 'collect',
             path: 'collect',
             parent: '',
-            title: '>data.data.projectInfo.projectName=收衣<',
+            title: '>=收衣<',
             dataPath: 'data',
             noCache: true
         },
@@ -38,7 +38,7 @@ const routes = {
             name: 'store',
             path: 'store',
             parent: '',
-            title: '>data.data.projectInfo.projectName=店铺<',
+            title: '>=店铺<',
             dataPath: 'data',
             noCache: true
         },
@@ -47,6 +47,14 @@ const routes = {
             path: 'category',
             parent: '',
             title: '>=分类<',
+            dataPath: 'data',
+            noCache: true
+        },
+        {
+            name: 'user',
+            path: 'user',
+            parent: '',
+            title: '>=账号<',
             dataPath: 'data',
             noCache: true
         }

@@ -40,6 +40,11 @@ const mutations = {
         // 包装对象，以使其可以显示重复的msg
         localStorage.setItem('token', token);
         state.token = token;
+    },
+    [types.USER]: (state, user) => {
+        // 包装对象，以使其可以显示重复的msg
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
     }
 
 };

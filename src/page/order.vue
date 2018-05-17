@@ -145,7 +145,6 @@
         },
         methods: {
             pageChange(page) {
-                debugger;
                 this.$store.dispatch("reload", {
                     routeName: this.$route.name,
                     query: {name: this.searchData.name, page: page - 1}

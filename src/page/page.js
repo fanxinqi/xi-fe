@@ -5,7 +5,8 @@ import Member from './member.vue';
 import Store from './store.vue';
 import Order from './order.vue';
 import Collect from './collect.vue';
-import Category from './category.vue'
+import Category from './category.vue';
+import User from './user.vue'
 
 const pages = {
     Login,
@@ -13,6 +14,7 @@ const pages = {
     Store,
     Order,
     Collect,
-    Category
+    Category,
+    User
 };
 export default pages;

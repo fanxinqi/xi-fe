@@ -50,23 +50,23 @@ export default function(view) {
                 }
             },
 
-            // message(event) {
-            //     const val = event && event.msg;
-            //     if(val) {
-            //         this.$Message.info({
-            //             duration: 3,
-            //             content: val
-            //         });
-            //     }
-            // }
+            message(event) {
+                const val = event && event.msg;
+                if(val) {
+                    this.$Message.info({
+                        duration: 3,
+                        content: val
+                    });
+                }
+            }
         },
         computed: {
             location() {
                 return this.$store.state.location;
             },
-            // message() {
-            //     return this.$store.state.message;
-            // }
+            message() {
+                return this.$store.state.message;
+            }
         },
         created() {
             this.routeName = this.$route.name;

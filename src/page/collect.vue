@@ -77,7 +77,7 @@
             <div class="bottom-card">  
                 <div class="order-info">
                     <div class="title">订单信息</div>
-                    <Table :columns="columns7"  :data="selectCategroyData"></Table>
+                    <Table :columns="columns7"  :data="selectGood"></Table>
                 </div>
                 <div class="button">
                     <div class="total">数量：共{{total}}件</div>
@@ -91,20 +91,25 @@
         </Card>
             <!-- </Affix> -->
     </div>
+     <Modal v-model="show" title="编辑会员" okText="" cancelText="">
+           <member-edit :form-data="categoryData"></member-edit>  
+      </Modal>
 </div>
 </template>
 
 <script>
+import memberEdit from "../fragment/member/edit.vue";
 const headUrl = require("./img/default-head.jpg");
 export default {
   props: ["data"],
   data() {
     return {
+      show:false,
       formValidate: {
         phone: "",
         name: "",
         headUrl,
-        categoryEntitySet: [],
+        goodsEntitySet: [],
         stateEntity: {
           id: 1
         },
@@ -112,7 +117,19 @@ export default {
         payment: {id:1},
         imageSet: []
       },
+       categoryData: {
+        name: "",
+        phone: "",
+        memberCategoryId: 0,
+        idNum: "",
+        headUrl: "",
+        birthday: "",
+        address: "",
+        desc: "",
+        memberCategoryEntity: this.data.memberCategory
+      },
       payment:[],
+      selectGood:[],
       selectCategroyData: [],
       categroyColumns: [
         {
@@ -151,7 +168,11 @@ export default {
         },
         {
           title: "分类",
-          key: "name"
+
+          render: (h, params) => {
+            const row = params.row;
+            return (<span>{row.name}</span>);
+          }
         },
         {
           title: "价格",
@@ -159,7 +180,10 @@ export default {
         },
         {
           title: "备注",
-          key: "des"
+          render: (h, params) => {
+            const row = params.row;
+            return (<span>{row.des}</span>);
+          }
         },
         {
           title: "操作",
@@ -185,6 +209,9 @@ export default {
       ]
     };
   },
+  components: {
+    memberEdit
+  },
   created() {
   },
   computed: {
@@ -203,20 +230,30 @@ export default {
   },
   methods: {
     save(){
-      this.formValidate.categoryEntitySet=this.selectCategroyData;
-      console.log(JSON.stringify(this.formValidate));
+      this.formValidate.goodsEntitySet=this.selectGood;
        this.$store
       .dispatch("proxyAction", {
         name: "saveClothesOrder",
         queries: null,
         data:this.formValidate,
-        message: false
+        message: true
       })
       .then(res => {
-        this.$Notice.success({
-                      title: '提醒',
-                      desc: `该衣服的货架号：${res.data.data.storageNum}`,
-                  });
+        if(res.res.data.error!=0){
+            this.$Notice.success(
+            {
+                  title: '提醒',
+                  desc: `${res.res.data.data.message}`,
+            });
+        }
+        else{
+          this.$Notice.success(
+            {
+                  title: '提醒',
+                  desc: `该衣服的货架号：${res.data.data.storageNum}`,
+            });
+          }
+     
       });
     },
     handleSuccess (res, file) {
@@ -225,18 +262,39 @@ export default {
     removeCategroy(params) {
       // this.selectCategroyData.remove(params.index)
       this.selectCategroyData.splice(params.index, 1);
+      this.selectGood.splice(params.index, 1);
     },
+
     selectCategroy(row) {
       this.selectCategroyData.push(row);
+      //说明存在
+      // let isNew=true;
+      // this.selectGood.forEach((good)=>{
+      //   if(good.clothesCategoryEntity.id==row.id){
+      //     isNew=false;
+      //     good.num++;
+      //   }
+      // });
+      //已经选择过同类型的商品
+      //if(isNew){
+        this.selectGood.push(row)
+      //}
     },
     reset() {
-      this.formValidate = {
-        phone: "",
+      this.formValidate =Object.assign(this.formValidate,{
         name: "",
-        headUrl
-      };
+        headUrl,
+        goodsEntitySet: [],
+        stateEntity: {
+          id: 1
+        },
+        storeId:1,
+        payment: {id:1},
+        imageSet: []
+      });
     },
     searchMember() {
+      this.reset();
       this.$store
         .dispatch("proxyAction", {
           name: "collect-search-member",
@@ -246,18 +304,23 @@ export default {
           message: false
         })
         .then(res => {
-          let member = res.data.data;
-          if (member) {
-            this.formValidate = Object.assign(this.formValidate, res.data.data);
+          let member = res.data.data.content;
+          if (member&&member.length>0&&member[0]) {
+            this.formValidate = Object.assign(this.formValidate, member[0]);
             if (!this.formValidate.headUrl) {
               this.formValidate.headUrl = headUrl;
             }
           } else {
-            this.reset();
+           
             this.$Modal.confirm({
               title: "选择",
-              content: "<p>确定充会员？</p>",
-              onOk: () => {},
+              content: "<p>确定创建会员？</p>",
+              onOk: () => {
+                
+                this.show=true;
+                this.categoryData.phone= this.formValidate.phone;
+                 this.reset();
+              },
               onCancel: () => {}
             });
           }

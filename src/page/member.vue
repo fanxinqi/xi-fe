@@ -38,8 +38,8 @@ export default {
         name: "",
         phone: ""
       },
-      tabel:{
-          total:parseInt(this.data.memberEntity.totalElements)
+      tabel: {
+        total: parseInt(this.data.memberEntity.totalElements)
       },
       formData: {
         name: "",
@@ -77,7 +77,9 @@ export default {
           render: (h, params) => {
             const row = params.row;
             const edit = () => {
-              this.formData = Object.assign(this.formData, row);
+              this.formData = Object.assign(this.formData, row, {
+                memberCategoryEntity: this.data.memberCategoryEntity
+              });
               this.show = true;
             };
             const reset = () => {
@@ -108,12 +110,11 @@ export default {
   methods: {
     pageChange() {},
     searchHandler() {},
-
     edit() {
       this.show = true;
     },
     add() {
-      (this.formDat = {
+      this.formDat = {
         name: "",
         phone: "",
         memberCategoryId: 0,
@@ -123,8 +124,8 @@ export default {
         address: "",
         desc: "",
         memberCategoryEntity: this.data.memberCategoryEntity
-      }),
-        (this.show = true);
+      };
+      this.show = true;
     }
   }
 };

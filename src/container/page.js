@@ -59,7 +59,7 @@ const pageContainer = function (view, options) {
             if (errorCode !== 0 || errorCodeType !== 0) {
                 return h(error, {
                     props: {
-                        message: this.$store.state['error-message'] || '服务器返回错误：' + errorCode,
+                        message: data.message || '服务器返回错误：' + errorCode,
                         code: errorCodeType
                     }
                 });

@@ -66,11 +66,11 @@ const portals = {
             headUrl: false,
             phone: true,
             des: false,
-            id_num: false,
+            idNum: false,
             birthday: false,
             gender: false,
             address: false,
-            member_category_id: true
+            memberCategoryId: true
         },
         headers: {
             "Content-Type": "application/json"
@@ -85,7 +85,7 @@ const portals = {
             headUrl: false,
             phone: true,
             des: false,
-            id_num: false,
+            idNum: false,
             birthday: false,
             gender: false,
             address: false,
@@ -110,7 +110,8 @@ const portals = {
             "name": true,
             "price": true,
             "des": false,
-            "imageEntity": true
+            "imageEntity": true,
+            "memberCategoryId":true
         },
         headers: {
             "Content-Type": "application/json"
@@ -126,7 +127,8 @@ const portals = {
             "name": true,
             "price": true,
             "des": false,
-            "imageEntity": false
+            "imageEntity": false,
+            "memberCategoryId":true
         },
         headers: {
             "Content-Type": "application/json"
@@ -147,7 +149,7 @@ const portals = {
         data: {
             "name":false,
             "phone": true,
-            "categoryEntitySet": true,
+            "goodsEntitySet": true,
             "payment": true,
             "stateEntity": true,
             "imageSet": true,
@@ -234,16 +236,32 @@ const portals = {
         data: {
             "id":true,
             "phone": true,
-            "categoryEntitySet": true,
+            "goodEnities": true,
             "paymentEntity": true,
             "stateEntity": true,
             "imageSet": true,
             "storeId":false,
-        },
-        headers: {
-            "Content-Type": "application/json"
         }
     },
+    "user": {
+        uri: "/api/accountInfo/list",
+        queries: null,
+        method: 'get',
+        data: null,
+        allowExtraQueries: true
+    },
+    "user-save":{
+        uri: "/api/accountInfo/save",
+        queries: null,
+        method: 'post',
+        data: {
+            id:false,
+            name:true,
+            passWord:true,
+            storeId:false,
+            roleId:false
+        }
+    }
 };
 
 // ==================== 通用数据接口end   =====================

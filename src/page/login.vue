@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       form: {
-        userName: "iview_admin",
+        userName: "",
         password: ""
       },
       rules: {
