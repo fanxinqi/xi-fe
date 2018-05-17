@@ -153,6 +153,7 @@ const portals = {
             "payment": true,
             "stateEntity": true,
             "imageSet": true,
+            "goodList":true,
             "storeId":false,
             "headUrl":false
         },

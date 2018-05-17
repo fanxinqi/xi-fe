@@ -16,23 +16,7 @@
                      <!--default-value="-"></Smart-table>-->
 
 
-        <Table height="200" :columns="columns1" :data="formData.categoryEntitySet"></Table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <Table height="200" :columns="columns1" :data="formData.goodsEntitySet"></Table>
 
 
 
@@ -114,6 +98,10 @@
                     {
                         title: '衣物价格',
                         key: 'price'
+                    },
+                    {
+                        title: '当前状态',
+                        key: "stateEntity"
                     }
                     ,
                     {

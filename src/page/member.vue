@@ -4,11 +4,11 @@
 <template>
     <div class="member">
         <div class="search-bar">
-            <Form :model="searchData" :label-width="80" inline>
-                <FormItem label="电话">
+            <Form :model="searchData" inline>
+                <FormItem label="电话" :label-width="80">
                     <Input v-model="searchData.phone" placeholder="请输入电话号码..."></Input>
                 </FormItem>
-                  <FormItem label="会员姓名">
+                  <FormItem label="会员姓名" :label-width="80">
                     <Input v-model="searchData.name" placeholder="请输入会员姓名..."></Input>
                 </FormItem>
                 <FormItem label="">

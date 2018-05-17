@@ -39,7 +39,13 @@
                                     </Select>
                                  </div>                           
                             </div>
-
+                            <div class="detail">
+                                <div class="item">
+                                    <Select v-model="formValidate.state.id" style="width:200px">
+                                        <Option v-for="item in data.stateEntity" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                                    </Select>
+                                </div>
+                            </div>
                              <div class="detail">
                                 <div class="item">
                                        
@@ -115,7 +121,9 @@ export default {
         },
         storeId:1,
         payment: {id:1},
-        imageSet: []
+          state: {id:1},
+        imageSet: [],
+          goodList:[]
       },
        categoryData: {
         name: "",
@@ -230,7 +238,7 @@ export default {
   },
   methods: {
     save(){
-      this.formValidate.goodsEntitySet=this.selectGood;
+      this.formValidate.goodList=this.selectGood;
        this.$store
       .dispatch("proxyAction", {
         name: "saveClothesOrder",
