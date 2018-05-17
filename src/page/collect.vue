@@ -100,16 +100,22 @@
      <Modal v-model="show" title="编辑会员" okText="" cancelText="">
            <member-edit :form-data="categoryData"></member-edit>  
       </Modal>
+      <Modal v-model="showCamera" title="拍照" okText="" @on-cancel="cancelCamera" cancelText="">
+           <camera ref="camera"></camera>  
+      </Modal>
 </div>
 </template>
 
 <script>
 import memberEdit from "../fragment/member/edit.vue";
+import camera from "../component/camera/camera.vue";
 const headUrl = require("./img/default-head.jpg");
 export default {
   props: ["data"],
   data() {
     return {
+      showCamera:false,
+      showc:false,
       show:false,
       formValidate: {
         phone: "",
@@ -201,9 +207,19 @@ export default {
             const remove = () => {
               this.removeCategroy(params);
             };
+            const camera= () =>{
+              this.showCamera=true;
+              this.$refs.camera.initCamera();
+            }
             return (
               <span class="setting-buttons">
-                <a
+                  <a
+                  href="javascript:;"
+                  style="margin-right:10px;"
+                  onClick={camera}
+                >
+                  拍照
+                </a><a
                   href="javascript:;"
                   style="margin-right:10px;"
                   onClick={remove}
@@ -218,7 +234,8 @@ export default {
     };
   },
   components: {
-    memberEdit
+    memberEdit,
+    camera
   },
   created() {
   },
@@ -300,6 +317,9 @@ export default {
         payment: {id:1},
         imageSet: []
       });
+    },
+    cancelCamera(){
+      this.$refs.camera.stop();
     },
     searchMember() {
       this.reset();
