@@ -35,9 +35,14 @@ const mockProxy={
     }
 }
 
+// const serverProxy={
+//     "/api": "http://127.0.0.1:9994"
+// }
 const serverProxy={
-    "/api": "http://127.0.0.1:9994"
+    "/api": "http://192.168.1.103:8092"
 }
+
+
 // const serverProxy={
 //     "/api": "http://10.10.15.56:8092"
 // }

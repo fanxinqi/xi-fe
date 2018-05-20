@@ -101,7 +101,7 @@
            <member-edit :form-data="categoryData"></member-edit>  
       </Modal>
       <Modal v-model="showCamera" title="拍照" okText="" @on-cancel="cancelCamera" cancelText="">
-           <camera ref="camera"></camera>  
+           <camera ref="camera" @upload-success="uploadBase64Success"></camera>  
       </Modal>
 </div>
 </template>
@@ -114,9 +114,9 @@ export default {
   props: ["data"],
   data() {
     return {
-      showCamera:false,
-      showc:false,
-      show:false,
+      showCamera: false,
+      showc: false,
+      show: false,
       formValidate: {
         phone: "",
         name: "",
@@ -125,13 +125,13 @@ export default {
         stateEntity: {
           id: 1
         },
-        storeId:1,
-        payment: {id:1},
-          state: {id:1},
+        storeId: 1,
+        payment: { id: 1 },
+        state: { id: 1 },
         imageSet: [],
-          goodList:[]
+        goodList: []
       },
-       categoryData: {
+      categoryData: {
         name: "",
         phone: "",
         memberCategoryId: 0,
@@ -142,8 +142,8 @@ export default {
         desc: "",
         memberCategoryEntity: this.data.memberCategory
       },
-      payment:[],
-      selectGood:[],
+      payment: [],
+      selectGood: [],
       selectCategroyData: [],
       categroyColumns: [
         {
@@ -185,7 +185,7 @@ export default {
 
           render: (h, params) => {
             const row = params.row;
-            return (<span>{row.name}</span>);
+            return <span>{row.name}</span>;
           }
         },
         {
@@ -196,7 +196,7 @@ export default {
           title: "备注",
           render: (h, params) => {
             const row = params.row;
-            return (<span>{row.des}</span>);
+            return <span>{row.des}</span>;
           }
         },
         {
@@ -207,19 +207,21 @@ export default {
             const remove = () => {
               this.removeCategroy(params);
             };
-            const camera= () =>{
-              this.showCamera=true;
+            const camera = () => {
+              this.showCamera = true;
+              this.currentGoodId=row.id;
               this.$refs.camera.initCamera();
-            }
+            };
             return (
               <span class="setting-buttons">
-                  <a
+                <a
                   href="javascript:;"
                   style="margin-right:10px;"
                   onClick={camera}
                 >
                   拍照
-                </a><a
+                </a>
+                <a
                   href="javascript:;"
                   style="margin-right:10px;"
                   onClick={remove}
@@ -237,8 +239,7 @@ export default {
     memberEdit,
     camera
   },
-  created() {
-  },
+  created() {},
   computed: {
     total() {
       return this.selectCategroyData.length;
@@ -254,34 +255,38 @@ export default {
     }
   },
   methods: {
-    save(){
-      this.formValidate.goodList=this.selectGood;
-       this.$store
-      .dispatch("proxyAction", {
-        name: "saveClothesOrder",
-        queries: null,
-        data:this.formValidate,
-        message: true
-      })
-      .then(res => {
-        if(res.res.data.error!=0){
-            this.$Notice.success(
-            {
-                  title: '提醒',
-                  desc: `${res.res.data.data.message}`,
+    uploadBase64Success(data) {
+       this.selectGood.forEach((item)=>{
+          if(item.id==this.currentGoodId)
+          {
+            item["imageEntity"]=data;
+          }
+       });
+    },
+    save() {
+      this.formValidate.goodList = this.selectGood;
+      this.$store
+        .dispatch("proxyAction", {
+          name: "saveClothesOrder",
+          queries: null,
+          data: this.formValidate,
+          message: true
+        })
+        .then(res => {
+          if (res.res.data.error != 0) {
+            this.$Notice.success({
+              title: "提醒",
+              desc: `${res.res.data.data.message}`
             });
-        }
-        else{
-          this.$Notice.success(
-            {
-                  title: '提醒',
-                  desc: `该衣服的货架号：${res.data.data.storageNum}`,
+          } else {
+            this.$Notice.success({
+              title: "提醒",
+              desc: `该衣服的货架号：${res.data.data.storageNum}`
             });
           }
-     
-      });
+        });
     },
-    handleSuccess (res, file) {
+    handleSuccess(res, file) {
       this.formValidate.imageSet.push(res.data);
     },
     removeCategroy(params) {
@@ -302,23 +307,23 @@ export default {
       // });
       //已经选择过同类型的商品
       //if(isNew){
-        this.selectGood.push(row)
+      this.selectGood.push(row);
       //}
     },
     reset() {
-      this.formValidate =Object.assign(this.formValidate,{
+      this.formValidate = Object.assign(this.formValidate, {
         name: "",
         headUrl,
         goodsEntitySet: [],
         stateEntity: {
           id: 1
         },
-        storeId:1,
-        payment: {id:1},
+        storeId: 1,
+        payment: { id: 1 },
         imageSet: []
       });
     },
-    cancelCamera(){
+    cancelCamera() {
       this.$refs.camera.stop();
     },
     searchMember() {
@@ -333,21 +338,19 @@ export default {
         })
         .then(res => {
           let member = res.data.data.content;
-          if (member&&member.length>0&&member[0]) {
+          if (member && member.length > 0 && member[0]) {
             this.formValidate = Object.assign(this.formValidate, member[0]);
             if (!this.formValidate.headUrl) {
               this.formValidate.headUrl = headUrl;
             }
           } else {
-           
             this.$Modal.confirm({
               title: "选择",
               content: "<p>确定创建会员？</p>",
               onOk: () => {
-                
-                this.show=true;
-                this.categoryData.phone= this.formValidate.phone;
-                 this.reset();
+                this.show = true;
+                this.categoryData.phone = this.formValidate.phone;
+                this.reset();
               },
               onCancel: () => {}
             });
@@ -379,9 +382,9 @@ export default {
       overflow-y: scroll;
       .member-info {
         flex: 1;
-          .ivu-form-item{
-              margin-bottom: 0px !important;
-          }
+        .ivu-form-item {
+          margin-bottom: 0px !important;
+        }
         .ivu-form-item-content {
           margin-left: 0px !important;
           text-align: center;
@@ -400,8 +403,8 @@ export default {
           .item {
             display: inline-block;
             width: 250px;
-            .image{
-              width:50px;
+            .image {
+              width: 50px;
               height: 50px;
             }
           }

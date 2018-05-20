@@ -262,6 +262,18 @@ const portals = {
             storeId:false,
             roleId:false
         }
+    },
+    "upload-camera":{
+        uri: "/api/attachment/uploadBase64",
+        queries: null,
+        method: 'post',
+        data: {
+            base64Data:true
+        }
+        // ,
+        // headers: {
+        //     "Content-Type": ""
+        // }
     }
 };
 
