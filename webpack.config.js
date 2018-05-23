@@ -39,7 +39,7 @@ const mockProxy={
 //     "/api": "http://127.0.0.1:9994"
 // }
 const serverProxy={
-    "/api": "http://192.168.1.103:8092"
+    "/api": "http://192.168.1.171:8092"
 }
 
 
@@ -166,7 +166,7 @@ const webpackConfig={
     plugins: [new HtmlWebpackPlugin(
         {
             template:"./index.html",
-            tilte:"研修直播平台",
+            title:"洗衣家",
             minify:process.env.NODE_ENV === 'production'
         } 
     ),

@@ -34,18 +34,18 @@
                             </div>
                              <div class="detail">
                                 <div class="item">
-                                    <Select v-model="formValidate.payment.id" style="width:200px">
+                                    <Select v-model="formValidate.paymentEntity.id" style="width:200px">
                                         <Option v-for="item in data.paymentList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                                     </Select>
                                  </div>                           
                             </div>
-                            <div class="detail">
+                            <!-- <div class="detail">
                                 <div class="item">
                                     <Select v-model="formValidate.state.id" style="width:200px">
                                         <Option v-for="item in data.stateEntity" :value="item.id" :key="item.id">{{ item.name }}</Option>
                                     </Select>
                                 </div>
-                            </div>
+                            </div> -->
                              <div class="detail">
                                 <div class="item">
                                        
@@ -98,7 +98,7 @@
             <!-- </Affix> -->
     </div>
      <Modal v-model="show" title="编辑会员" okText="" cancelText="">
-           <member-edit :form-data="categoryData"></member-edit>  
+           <member-edit :form-data="categoryData" @update="updateSuccess"></member-edit>  
       </Modal>
       <Modal v-model="showCamera" title="拍照" okText="" @on-cancel="cancelCamera" cancelText="">
            <camera ref="camera" @upload-success="uploadBase64Success"></camera>  
@@ -122,11 +122,11 @@ export default {
         name: "",
         headUrl,
         goodsEntitySet: [],
-        stateEntity: {
-          id: 1
-        },
+        // stateEntity: {
+        //   id: 1
+        // },
         storeId: 1,
-        payment: { id: 1 },
+        paymentEntity: { id: 1 },
         state: { id: 1 },
         imageSet: [],
         goodList: []
@@ -142,7 +142,6 @@ export default {
         desc: "",
         memberCategoryEntity: this.data.memberCategory
       },
-      payment: [],
       selectGood: [],
       selectCategroyData: [],
       categroyColumns: [
@@ -255,6 +254,12 @@ export default {
     }
   },
   methods: {
+    updateSuccess(res){
+      this.show=false;
+      this.formValidate.name=res.name;
+      this.formValidate.headUrl=res.headUrl;
+      this.formValidate.phone=res.phone;
+    },
     uploadBase64Success(data) {
        this.selectGood.forEach((item)=>{
           if(item.id==this.currentGoodId)
@@ -265,14 +270,12 @@ export default {
     },
     save() {
       this.formValidate.goodList = this.selectGood;
-      this.$store
-        .dispatch("proxyAction", {
+      this.$store.dispatch("proxyAction", {
           name: "saveClothesOrder",
           queries: null,
           data: this.formValidate,
-          message: true
-        })
-        .then(res => {
+          message: false
+        }).then(res => {
           if (res.res.data.error != 0) {
             this.$Notice.success({
               title: "提醒",
@@ -315,11 +318,11 @@ export default {
         name: "",
         headUrl,
         goodsEntitySet: [],
-        stateEntity: {
-          id: 1
-        },
+        // stateEntity: {
+        //   id: 1
+        // },
         storeId: 1,
-        payment: { id: 1 },
+        paymentEntity: { id: 1 },
         imageSet: []
       });
     },
@@ -349,6 +352,7 @@ export default {
               content: "<p>确定创建会员？</p>",
               onOk: () => {
                 this.show = true;
+                // this.categoryData=this.formValidate
                 this.categoryData.phone = this.formValidate.phone;
                 this.reset();
               },

@@ -104,9 +104,10 @@ export default {
               param: null
             })
             .then(res => {
-              this.$store.dispatch("reload", {
-                routeName: this.$route.name
-              });
+               this.$emit('update',postData)
+              // this.$store.dispatch("reload", {
+              //   routeName: this.$route.name
+              // });
             });
         } else {
           this.$Message.error("验证失败!");

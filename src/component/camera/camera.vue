@@ -30,7 +30,6 @@ export default {
     onPlayerPause(player) {},
     camera() {
       this.context.drawImage(this.$refs.video, 0, 0, 200, 150);
-      console.log(this.getBase64Data());
     },
     stop() {
       this.MediaStreamTrack && this.MediaStreamTrack.stop();

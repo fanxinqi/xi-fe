@@ -1,7 +1,7 @@
 <template>
     <div class="menu">
         <div class="icon">
-            <img src="http://v1.iviewui.com/dist/fe8d29da1225d943e30f9ee1bddce78f.png">
+            <img src="./img/logo.jpg">
         </div>
         <div class="menus">
             <Menu :theme="theme3" @on-select="select"  active-key="1" v-for="(group,gidx) in menuGroups" :key="gidx">
@@ -16,9 +16,8 @@
 </template>
 <style scoped lang="scss">
     .icon{
-        padding-left: 10px;
         img{
-            height: 50px;
+            width: 100%;
         }
     }
     .group{

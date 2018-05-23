@@ -1,7 +1,5 @@
 <template>
     <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="80">
-
-        {{formData}}
         <FormItem label="手机号" prop="phone">
             <Input v-model="formData.phone" placeholder="请输入你的手机号"></Input>
         </FormItem>
@@ -11,14 +9,8 @@
         <FormItem label="总数量" prop="totalNum">
             <Input v-model="formData.totalNum" placeholder="请输入总数量"></Input>
         </FormItem>
-        <!--<Smart-table :columns="columns7" :data="formData.categoryEntitySet" :total="tabel.total" :show-page="true"-->
-                     <!--:current-page="data.orderList.number+1" @on-page-change="pageChange"-->
-                     <!--default-value="-"></Smart-table>-->
-
 
         <Table height="200" :columns="columns1" :data="formData.goodsEntitySet"></Table>
-
-
 
         <FormItem label="订单相关图片" >
             <div class="demo-upload-list" v-for="item in formData.imageSet">
@@ -101,7 +93,11 @@
                     },
                     {
                         title: '当前状态',
-                        key: "stateEntity"
+                        key: "stateEntity",
+                        render:(h,params)=>{
+                            const row = params.row;
+                            return (<span>{row.name}</span>);
+                        }
                     }
                     ,
                     {
@@ -114,8 +110,7 @@
                             const edit = () => {
                                 this.formData = Object.assign(this.formData, row);
                                 if (!this.formData.paymentEntity) {
-                                    this.formData.paymentEntity
-                                        = {
+                                    this.formData.paymentEntity = {
                                         id: 0,
                                         name: ""
                                     }
@@ -232,6 +227,7 @@
                             'data':postData,
                             'param': null
                         }).then((res)=>{
+                            this.$emit('update',postData)
                             this.$store.dispatch("reload",{
                                 routeName:this.$route.name
                             })
