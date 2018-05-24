@@ -139,7 +139,12 @@
                                     },
                                     on: {
                                         click: () => {
-                                            edit()
+                                            this.row.appendixEntitySet=[
+                                                {
+                                                    name:"",
+                                                    des:""
+                                                }
+                                            ]
                                         }
                                     }
                                 }, '编辑'),

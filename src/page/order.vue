@@ -19,7 +19,7 @@
         <Smart-table :columns="columns7" :data="data.orderList.content" :total="tabel.total" :show-page="true"
                      :current-page="data.orderList.number+1" @on-page-change="pageChange"
                      default-value="-"></Smart-table>
-        <Modal v-model="show" title="编辑店铺" okText="" cancelText="">
+        <Modal v-model="show" title="编辑店铺" okText="" cancelText="" width="1000">
             <order-edit :form-data="formData"></order-edit>
         </Modal>
     </div>
