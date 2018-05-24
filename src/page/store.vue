@@ -48,7 +48,7 @@ export default {
         imageEntity: {
           url: "",
           id: ""
-        },
+        }, storageNum:0,
         storeLaundryExpertSet: []
       },
       show: false,

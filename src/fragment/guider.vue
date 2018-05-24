@@ -22,9 +22,7 @@ export default {
 
         };
     },
-
     props: ['to', 'match'],
-
     computed: {
         isCurrent: function() {
             let rule = getRouteByName(this.$route.name);

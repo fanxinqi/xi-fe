@@ -184,7 +184,8 @@ const portals = {
             des: true,
             address: true,
             imageEntity: false,
-            storeLaundryExpertSet: false
+            storeLaundryExpertSet: false,
+            storageNum:false
         },
         headers: {
             "Content-Type": "application/json"
@@ -200,7 +201,8 @@ const portals = {
             des: true,
             address: true,
             imageEntity: false,
-            storeLaundryExpertSet: false
+            storeLaundryExpertSet: false,
+            storageNum:false
         },
         headers: {
             "Content-Type": "application/json"

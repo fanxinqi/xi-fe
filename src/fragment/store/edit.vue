@@ -3,7 +3,10 @@
         <FormItem label="店铺名称" prop="name">
             <Input v-model="formData.name" placeholder="请输入你的店铺名称"></Input>
         </FormItem>
-        <FormItem label="头像">
+        <FormItem label="店铺货架号">
+            <Input v-model="formData.storageNum" placeholder="请输入货架号数量"></Input>
+        </FormItem>
+        <FormItem label="店铺logo">
             <img :src="formData.imageEntity.url" class="head">
             <Upload
                     ref="upload"
@@ -22,12 +25,7 @@
                     <Icon type="camera" size="20"></Icon>
                 </div>
             </Upload>
-            <!-- <Modal title="View Image" v-model="visible">
-                <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
-            </Modal> -->
         </FormItem>
-
-
         <FormItem label="地址" prop="address">
             <Input v-model="formData.address" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入店铺地址"></Input>
         </FormItem>
