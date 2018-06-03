@@ -216,7 +216,7 @@ export default {
                 <a
                   href="javascript:;"
                   style="margin-right:10px;"
-                  onClick={camera}
+                  onClick={came                ra}
                 >
                   拍照
                 </a>

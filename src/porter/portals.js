@@ -242,7 +242,11 @@ const portals = {
             "paymentEntity": true,
             "stateEntity": true,
             "imageSet": true,
+            "goodsEntitySet": true,
             "storeId":false,
+        },
+        headers: {
+            "Content-Type": "application/json"
         }
     },
     "user": {

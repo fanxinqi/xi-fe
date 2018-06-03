@@ -1,60 +1,34 @@
 <template>
-    <!--<div>-->
-        <!--<Row class="expand-row">-->
-            <!--<Col span="8">-->
-             <!--<span class="expand-key">Job: </span>-->
-             <!--<span class="expand-value">{{ row.job }}</span>-->
-            <!--</Col>-->
-            <!--<Col span="8">-->
-            <!--<span class="expand-key">Interest: </span>-->
-            <!--<span class="expand-value">{{ row.interest }}</span>-->
-            <!--</Col>-->
-            <!--<Col span="8">-->
-            <!--<span class="expand-key">Birthday: </span>-->
-            <!--<span class="expand-value">{{ row.birthday }}</span>-->
-            <!--</Col>-->
-        <!--</Row>-->
-        <!--<Row>-->
-            <!--<Col span="8">-->
-            <!--<span class="expand-key">Favorite book: </span>-->
-            <!--<span class="expand-value">《{{ row.book }}》</span>-->
-            <!--</Col>-->
-            <!--<Col span="8">-->
-            <!--<span class="expand-key">Favorite movie: </span>-->
-            <!--<span class="expand-value">{{ row.movie }}</span>-->
-            <!--</Col>-->
-            <!--<Col span="8">-->
-            <!--<span class="expand-key">Favorite music: </span>-->
-            <!--<span class="expand-value">{{ row.music }}</span>-->
-            <!--</Col>-->
-        <!--</Row>-->
-    <!--</div>-->
-    <Table   :data="row.appendixEntitySet"></Table>
-
+    <Table  :columns="columns1" :data="row.appendixEntitySet"></Table>
 </template>
 
 <script>
 export default {
   props: {
-    row: Object,
-    isEdit: {
-      type: Boolean,
-      default: "false"
-    }
+    row: Object
   },
+    watch:{
+        haha(newValue){
+            debugger;
+            console.log(newValue);
+        }
+    },
   data() {
     return {
+        haha:this.row,
       columns1: [
         {
           title: "附件名称",
           key: "name",
           render: (h, params) => {
             const row = params.row;
-            if (this.isEdit) {
-              return <input value={row.name} />;
-            } else {
-              return <span>{row.name}</span>;
-            }
+              console.log(row);
+              if(row.isEdit){
+                  return <input value={row.name}/>;
+              }
+              else{
+                  return <span>{row.name}</span>;
+              }
           }
         },
         {
@@ -62,75 +36,39 @@ export default {
           key: "des",
           render: (h, params) => {
             const row = params.row;
-            return <span>{row.name}</span>;
-          }
-        },
-        {
-          title: "当前状态",
-          key: "stateEntity",
-          render: (h, params) => {
-            const row = params.row;
-            return <span>{row.name}</span>;
+              if(row.isEdit){
+                  return <input value={row.des}/>;
+              }
+              else{
+                  return <span>{row.des}</span>;
+              }
           }
         },
         {
           title: "操作",
           key: "id",
           width: 150,
-          align: "center"
-          // render: (h, params) => {
-          //     const row = params.row;
-          //     const edit = () => {
-          //         this.formData = Object.assign(this.formData, row);
-          //         if (!this.formData.paymentEntity) {
-          //             this.formData.paymentEntity = {
-          //                 id: 0,
-          //                 name: ""
-          //             }
-          //         }
-          //         if (!this.formData.stateEntity) {
-          //             this.formData.stateEntity = {
-          //                 id: 0,
-          //                 name: ""
-          //             }
-          //         }
-          //         this.show = true;
-          //     };
-          //     const reset = () => {
-          //         this.reset(row);
-          //     };
-          //     const select = () => {
-          //         this.selectClass(row);
-          //     };
-          //     return h('div', [
-          //         h('Button', {
-          //             props: {
-          //                 type: 'info',
-          //                 size: 'small'
-          //             },
-          //             style: {
-          //                 marginRight: '5px'
-          //             },
-          //             on: {
-          //                 click: () => {
-          //                     edit()
-          //                 }
-          //             }
-          //         }, '编辑'),
-          //         h('Button', {
-          //             props: {
-          //                 type: 'warning',
-          //                 size: 'small'
-          //             },
-          //             on: {
-          //                 click: () => {
-          //                     let id = row.id;
-          //                     this.deleteHandler(id)
-          //                 }
-          //             }
-          //         }, '删除')
-          //     ]);
-          // }
+          align: "center",
+            render: (h, params) => {
+                const row = params.row;
+                const deleteHandler=()=>{
+                    this.row.appendixEntitySet=this.row.appendixEntitySet.splice(row._index,1);
+                    console.log(this.row.appendixEntitySet);
+                }
+                return h('Button', {
+                                props: {
+                                    type: 'warning',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        let id = row.id;
+                                        deleteHandler(id)
+                                    }
+                                }
+                            }, '删除')
+            }
+
         }
       ]
     };

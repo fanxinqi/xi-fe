@@ -57,12 +57,16 @@
         <FormItem>
             <Button type="primary" @click="handleSubmit('formData')">保存</Button>
         </FormItem>
+        <Modal v-model="showCamera" title="拍照" okText="" @on-cancel="cancelCamera" cancelText="">
+            <camera ref="camera" @upload-success="uploadBase64Success"></camera>
+        </Modal>
     </Form>
 </template>
 
 <script>
     import {util} from '../../lib/tools';
     import expandRow from './expand.vue';
+    import camera from '../../component/camera/camera.vue';
     export default {
         props:["formData"],
         data () {
@@ -81,89 +85,7 @@
                 },
                 bigImgUrl: '',
                 visible: false,
-                columns1: [
-                    {
-                        title: '衣物名称',
-                        key: 'name'
-                    },
-                    {
-                        title: '衣物价格',
-                        key: 'price'
-                    },
-                    {
-                        title: '当前状态',
-                        key: "stateEntity",
-                        render:(h,params)=>{
-                            const row = params.row;
-                            return (<span>{row.name}</span>);
-                        }
-                    }
-                    ,
-                    {
-                        title: '操作',
-                        key: 'id',
-                        width: 150,
-                        align: 'center',
-                        render: (h, params) => {
-                            const row = params.row;
-                            const edit = () => {
-                                this.formData = Object.assign(this.formData, row);
-                                if (!this.formData.paymentEntity) {
-                                    this.formData.paymentEntity = {
-                                        id: 0,
-                                        name: ""
-                                    }
-                                }
-                                if (!this.formData.stateEntity) {
-                                    this.formData.stateEntity = {
-                                        id: 0,
-                                        name: ""
-                                    }
-                                }
-                                this.show = true;
-                            };
-                            const reset = () => {
-                                this.reset(row);
-                            };
-                            const select = () => {
-                                this.selectClass(row);
-                            };
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'info',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.row.appendixEntitySet=[
-                                                {
-                                                    name:"",
-                                                    des:""
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'warning',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            let id = row.id;
-                                            this.deleteHandler(id)
-                                        }
-                                    }
-                                }, '删除')
-                            ]);
-                        }
-                    }
-                ],
+                showCamera: false,
                 columns10: [
                     {
                         type: 'expand',
@@ -199,21 +121,19 @@
                         align: 'center',
                         render: (h, params) => {
                             const row = params.row;
-                            const edit = () => {
-                                this.formData = Object.assign(this.formData, row);
-                                if (!this.formData.paymentEntity) {
-                                    this.formData.paymentEntity = {
-                                        id: 0,
-                                        name: ""
-                                    }
-                                }
-                                if (!this.formData.stateEntity) {
-                                    this.formData.stateEntity = {
-                                        id: 0,
-                                        name: ""
-                                    }
-                                }
-                                this.show = true;
+                            const addAppendix = () => {
+                                this.formData.goodsEntitySet[row._index]._expanded=true;
+                               if(!Array.isArray(this.formData.goodsEntitySet[row._index].appendixEntitySet)){
+                                   this.formData.goodsEntitySet[row._index].appendixEntitySet=[{name:"",des:"",isEdit:true}];
+                               }
+                               else{
+                                   this.formData.goodsEntitySet[row._index].appendixEntitySet.push({name:"",des:"",isEdit:true});
+                               }
+                            };
+                            const camera = () => {
+                                this.showCamera = true;
+                                this.currentGoodId=row.id;
+                                this.$refs.camera.initCamera();
                             };
                             const reset = () => {
                                 this.reset(row);
@@ -232,10 +152,25 @@
                                     },
                                     on: {
                                         click: () => {
-                                            edit()
+                                            debugger;
+                                            addAppendix()
                                         }
                                     }
-                                }, '编辑'),
+                                }, '添加附件'),
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            camera
+                                        }
+                                    }
+                                }, '拍照'),
                                 h('Button', {
                                     props: {
                                         type: 'warning',
@@ -251,68 +186,21 @@
                             ]);
                         }
                     }
-                ],
-                data9: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        job: 'Data engineer',
-                        interest: 'badminton',
-                        birthday: '1991-05-14',
-                        book: 'Steve Jobs',
-                        movie: 'The Prestige',
-                        music: 'I Cry'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-                        job: 'Data Scientist',
-                        interest: 'volleyball',
-                        birthday: '1989-03-18',
-                        book: 'My Struggle',
-                        movie: 'Roman Holiday',
-                        music: 'My Heart Will Go On'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        job: 'Data Product Manager',
-                        interest: 'tennis',
-                        birthday: '1992-01-31',
-                        book: 'Win',
-                        movie: 'Jobs',
-                        music: 'Don’t Cry'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        job: 'Data Analyst',
-                        interest: 'snooker',
-                        birthday: '1988-7-25',
-                        book: 'A Dream in Red Mansions',
-                        movie: 'A Chinese Ghost Story',
-                        music: 'actor'
-                    }
                 ]
-
-
-
-
-
-
-
-
-
-
-
-
             }
         },
         methods: {
+            cancelCamera() {
+                this.$refs.camera.stop();
+            },
+            uploadBase64Success(data) {
+                this.formData.goodsEntitySet.forEach((item)=>{
+                    if(item.id==this.currentGoodId)
+                    {
+                        item["imageEntity"]=data;
+                    }
+                });
+            },
             handleSubmit () {
                 this.$refs["formData"].validate((valid) => {
                     if (valid) {
